@@ -72,12 +72,27 @@ Taller.
 
     ![resultAfterChanges.png](./img/media/resultAfterChanges.png)
 
-3.  Una vez corregido el problema inicial, corra la aplicación varias
-    veces, e identifique las inconsistencias en los resultados de las
-    mismas viendo el ‘ranking’ mostrado en consola (algunas veces
-    podrían salir resultados válidos, pero en otros se pueden presentar
-    dichas inconsistencias). A partir de esto, identifique las regiones
-    críticas () del programa.
+   3.  Una vez corregido el problema inicial, corra la aplicación varias
+       veces, e identifique las inconsistencias en los resultados de las
+       mismas viendo el ‘ranking’ mostrado en consola (algunas veces
+       podrían salir resultados válidos, pero en otros se pueden presentar
+       dichas inconsistencias). A partir de esto, identifique las regiones
+       críticas () del programa.
+    
+       En el primer intento todo ocurrió sin ninguna inconsistencia, todos los galgos llegaron y se declaró a un ganador.
+
+       ![try1.png](./img/media/try1.png)
+
+       En el segundo si ocurrieron cosas raras debido a que algunos galgos compartían misma posición con otros, si bien es cierto que 
+       el mensaje de ganador daba como vencedor a uno de los galgos que quedaron de primeras, cada galgo debería tener su propia posición por más 
+       que el tiempo entre estos sea muy cercano.
+
+       ![try2.png](./img/media/try2.png)
+
+       En el ultímo intento ocurrió algo similar al caso anterior, pero en este sí que hubo inconsistencias al momento de anunciar al 
+       ganador por pantalla, ya que solo contaban 16 galgos cuando deberían ser 17, estos se debe a que dos galgos se contaron como ganadores.
+
+       ![try3.png](./img/media/try3.png)
 
 4.  Utilice un mecanismo de sincronización para garantizar que a dichas
     regiones críticas sólo acceda un hilo a la vez. Verifique los
