@@ -57,6 +57,8 @@ Taller.
     
     a. La acción de iniciar la carrera y mostrar los resultados se realiza a partir de la línea 38 de MainCanodromo.
 
+    Como se puede ver lo que pasa es que al momento de iniciar la carrera se anuncia el ganador, pero como ningun galgo ha llegado a la meta siempre se muestra null.
+
     ![part2-beforeChange.png](./img/media/part2_beforeChange.png)
 
     ![resultBeforeChanges.png](./img/media/resultBeforeChanges.png)
@@ -70,18 +72,18 @@ Taller.
 
     ![resultAfterChanges.png](./img/media/resultAfterChanges.png)
 
-2.  Una vez corregido el problema inicial, corra la aplicación varias
+3.  Una vez corregido el problema inicial, corra la aplicación varias
     veces, e identifique las inconsistencias en los resultados de las
     mismas viendo el ‘ranking’ mostrado en consola (algunas veces
     podrían salir resultados válidos, pero en otros se pueden presentar
     dichas inconsistencias). A partir de esto, identifique las regiones
     críticas () del programa.
 
-3.  Utilice un mecanismo de sincronización para garantizar que a dichas
+4.  Utilice un mecanismo de sincronización para garantizar que a dichas
     regiones críticas sólo acceda un hilo a la vez. Verifique los
     resultados.
 
-4.  Implemente las funcionalidades de pausa y continuar. Con estas,
+5.  Implemente las funcionalidades de pausa y continuar. Con estas,
     cuando se haga clic en ‘Stop’, todos los hilos de los galgos
     deberían dormirse, y cuando se haga clic en ‘Continue’ los mismos
     deberían despertarse y continuar con la carrera. Diseñe una solución que permita hacer esto utilizando los mecanismos de sincronización con las primitivas de los Locks provistos por el lenguaje (wait y notifyAll).
