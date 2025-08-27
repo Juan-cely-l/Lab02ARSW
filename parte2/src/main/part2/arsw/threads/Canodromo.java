@@ -36,10 +36,8 @@ public class Canodromo extends JFrame {
 	/**
 	 * Constructor
 	 * 
-	 * @param nCarriles
-	 *            Numero de carriles
-	 * @param longPista
-	 *            Longitud de la pista
+	 * @param nCarriles Número de carriles
+	 * @param longPista Longitud de la pista
 	 */
 	public Canodromo(int nCarriles, int longPista) {
 		carril = new Carril[nCarriles];

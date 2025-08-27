@@ -54,10 +54,21 @@ Taller.
 1.  Corrija la aplicación para que el aviso de resultados se muestre
     sólo cuando la ejecución de todos los hilos ‘galgo’ haya finalizado.
     Para esto tenga en cuenta:
+    
+    a. La acción de iniciar la carrera y mostrar los resultados se realiza a partir de la línea 38 de MainCanodromo.
 
-    a.  La acción de iniciar la carrera y mostrar los resultados se realiza a partir de la línea 38 de MainCanodromo.
+    ![part2-beforeChange.png](./img/media/part2_beforeChange.png)
 
-    b.  Puede utilizarse el método join() de la clase Thread para sincronizar el hilo que inicia la carrera, con la finalización de los hilos de los galgos.
+    ![resultBeforeChanges.png](./img/media/resultBeforeChanges.png)
+
+    b. Puede utilizarse el método join() de la clase Thread para sincronizar el hilo que inicia la carrera, con la finalización de los hilos de los galgos.
+    
+    Lo que hicimos fue agregar un ciclo en el que por cada galgo que es representado por un hilo se le agregue un ```join()``` de manera que el hilo principal que lanza la carrera
+    se pausa hasta que el galgo haya completado su ejecución, de esta manera se garantiza que el ganador solo se anuncie cuando la carrera acabe.
+
+    ![part2_AfterChange.png](./img/media/part2_AfterChange.png)
+
+    ![resultAfterChanges.png](./img/media/resultAfterChanges.png)
 
 2.  Una vez corregido el problema inicial, corra la aplicación varias
     veces, e identifique las inconsistencias en los resultados de las
