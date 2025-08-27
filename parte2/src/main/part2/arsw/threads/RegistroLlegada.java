@@ -1,4 +1,4 @@
-package arsw.threads;
+package main.part2.arsw.threads;
 
 public class RegistroLlegada {
 

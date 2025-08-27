@@ -1,4 +1,4 @@
-package arsw.threads;
+package main.part2.arsw.threads;
 
 /**
  * Un galgo que puede correr en un carril
