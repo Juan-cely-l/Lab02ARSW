@@ -54,23 +54,74 @@ Taller.
 1.  Corrija la aplicación para que el aviso de resultados se muestre
     sólo cuando la ejecución de todos los hilos ‘galgo’ haya finalizado.
     Para esto tenga en cuenta:
+    
+    a. La acción de iniciar la carrera y mostrar los resultados se realiza a partir de la línea 38 de MainCanodromo.
 
-    a.  La acción de iniciar la carrera y mostrar los resultados se realiza a partir de la línea 38 de MainCanodromo.
+    Como se puede ver lo que pasa es que al momento de iniciar la carrera se anuncia el ganador, pero como ningun galgo ha llegado a la meta siempre se muestra null.
 
-    b.  Puede utilizarse el método join() de la clase Thread para sincronizar el hilo que inicia la carrera, con la finalización de los hilos de los galgos.
+    ![part2-beforeChange.png](./img/media/part2_beforeChange.png)
 
-2.  Una vez corregido el problema inicial, corra la aplicación varias
-    veces, e identifique las inconsistencias en los resultados de las
-    mismas viendo el ‘ranking’ mostrado en consola (algunas veces
-    podrían salir resultados válidos, pero en otros se pueden presentar
-    dichas inconsistencias). A partir de esto, identifique las regiones
-    críticas () del programa.
+    ![resultBeforeChanges.png](./img/media/resultBeforeChanges.png)
 
-3.  Utilice un mecanismo de sincronización para garantizar que a dichas
+    b. Puede utilizarse el método join() de la clase Thread para sincronizar el hilo que inicia la carrera, con la finalización de los hilos de los galgos.
+    
+    Lo que hicimos fue agregar un ciclo en el que por cada galgo que es representado por un hilo se le agregue un ```join()``` de manera que el hilo principal que lanza la carrera
+    se pausa hasta que el galgo haya completado su ejecución, de esta manera se garantiza que el ganador solo se anuncie cuando la carrera acabe.
+
+    ![part2_AfterChange.png](./img/media/part2_AfterChange.png)
+
+    ![resultAfterChanges.png](./img/media/resultAfterChanges.png)
+
+   3.  Una vez corregido el problema inicial, corra la aplicación varias
+       veces, e identifique las inconsistencias en los resultados de las
+       mismas viendo el ‘ranking’ mostrado en consola (algunas veces
+       podrían salir resultados válidos, pero en otros se pueden presentar
+       dichas inconsistencias). A partir de esto, identifique las regiones
+       críticas () del programa.
+    
+       En el primer intento todo ocurrió sin ninguna inconsistencia, todos los galgos llegaron y se declaró a un ganador.
+
+       ![try1.png](./img/media/try1.png)
+
+       En el segundo si ocurrieron cosas raras debido a que algunos galgos compartían misma posición con otros, si bien es cierto que 
+       el mensaje de ganador daba como vencedor a uno de los galgos que quedaron de primeras, cada galgo debería tener su propia posición por más 
+       que el tiempo entre estos sea muy cercano.
+
+       ![try2.png](./img/media/try2.png)
+
+       En el ultímo intento ocurrió algo similar al caso anterior, pero en este sí que hubo inconsistencias al momento de anunciar al 
+       ganador por pantalla, ya que solo contaban 16 galgos cuando deberían ser 17, estos se debe a que dos galgos se contaron como ganadores.
+
+       ![try3.png](./img/media/try3.png)
+
+       En base a esto las regiones críticas que identificamos son:
+
+        1. Actualización de la posición de llegada
+           
+            ```
+            int ubicacion = regl.getUltimaPosicionAlcanzada();
+            regl.setUltimaPosicionAlcanzada(ubicacion + 1);
+            ```
+
+            Aquí múltiples hilos leen el mismo valor de ultimaPosicionAlcanzada y lo incrementan en paralelo, provocando que dos galgos obtengan la misma posición.
+
+        3. Determinación del ganador
+           
+            ```
+            if (ubicacion == 1) {
+                regl.setGanador(this.getName());
+            }
+            ```
+
+            Como la condición y la asignación no están protegidas, varios galgos pueden “verse” como primeros y declararse ganadores simultáneamente.
+
+        Para corregir estas inconsistencias, es necesario aplicar un mecanismo de sincronización (por ejemplo synchronized, ReentrantLock o variables atómicas) que asegure que solo un hilo a la vez pueda ejecutar estas secciones.
+
+5.  Utilice un mecanismo de sincronización para garantizar que a dichas
     regiones críticas sólo acceda un hilo a la vez. Verifique los
     resultados.
 
-4.  Implemente las funcionalidades de pausa y continuar. Con estas,
+6.  Implemente las funcionalidades de pausa y continuar. Con estas,
     cuando se haga clic en ‘Stop’, todos los hilos de los galgos
     deberían dormirse, y cuando se haga clic en ‘Continue’ los mismos
     deberían despertarse y continuar con la carrera. Diseñe una solución que permita hacer esto utilizando los mecanismos de sincronización con las primitivas de los Locks provistos por el lenguaje (wait y notifyAll).
