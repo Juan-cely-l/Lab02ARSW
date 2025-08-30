@@ -120,18 +120,39 @@ Taller.
 5.  Utilice un mecanismo de sincronización para garantizar que a dichas
     regiones críticas sólo acceda un hilo a la vez. Verifique los
     resultados.
+    
 
-6.  Implemente las funcionalidades de pausa y continuar. Con estas,
+**En este caso Decidimos crear un metodo , el cual devuelve la ultima posicion del galgo y ademas la incrementa , lo cual resulta en un solo bloque sincronizado , con un lock en , lo cual nos asegura que cada galgo va a tener una unica posicion, dado que anteriormente se utilizaban metodos separados y no estaban sincroniozados.** 
+    
+![zona critica correccion1.png](img%2Fmedia%2Fzona%20critica%20correccion1.png)
+
+![zona critica correcion 2.png](img%2Fmedia%2Fzona%20critica%20correcion%202.png)
+
+![zona critica correcion 3.png](img%2Fmedia%2Fzona%20critica%20correcion%203.png)
+
+
+4. Implemente las funcionalidades de pausa y continuar. Con estas,
     cuando se haga clic en ‘Stop’, todos los hilos de los galgos
     deberían dormirse, y cuando se haga clic en ‘Continue’ los mismos
     deberían despertarse y continuar con la carrera. Diseñe una solución que permita hacer esto utilizando los mecanismos de sincronización con las primitivas de los Locks provistos por el lenguaje (wait y notifyAll).
 
 
+En esta solución, se implementa un mecanismo de pausa y reanudación centralizado mediante la clase PauseControl, que actúa como monitor compartido entre todos los hilos Galgo. Esta clase mantiene una bandera paused y expone tres métodos sincronizados: pauseAll() para activar la pausa, resumeAll() para desactivarla y despertar a todos los hilos con notifyAll(), y checkPaused() que bloquea el hilo en wait() mientras la bandera esté activa. Cada Galgo recibe una referencia a este monitor y, dentro de su bucle de carrera (corra()), invoca checkPaused() en cada iteración, garantizando que pueda detenerse en cualquier momento y reanudarse de forma inmediata cuando se llame a resumeAll(). En MainCanodromo, los botones Stop y Continue simplemente llaman a pauseAll() y resumeAll() respectivamente, logrando que todos los hilos se sincronicen con una sola llamada, evitando recorrerlos individualmente y asegurando un control limpio, eficiente y libre de condiciones de carrera.
+
+
+![pausa 1.png](img%2Fmedia%2Fpausa%201.png)
+
+
+![pausa 2.png](img%2Fmedia%2Fpausa%202.png)
+
+
+![pausa 3.png](img%2Fmedia%2Fpausa%203.png)
+
 ## Criterios de evaluación
 
 1. Funcionalidad.
 
-    1.1. La ejecución de los galgos puede ser detenida y resumida consistentemente.
+    1.x1. La ejecución de los galgos puede ser detenida y resumida consistentemente.
     
     1.2. No hay inconsistencias en el orden de llegada registrado.
     

@@ -3,6 +3,7 @@ package main.part2.arsw.threads;
 public class RegistroLlegada {
 
 	private int ultimaPosicionAlcanzada=1;
+	private  final Object lockUltimaPosicionAlcanzada=new Object();
 
 	private String ganador=null;
 	
@@ -14,13 +15,25 @@ public class RegistroLlegada {
 		this.ganador = ganador;
 	}
 
-	public int getUltimaPosicionAlcanzada() {
-		return ultimaPosicionAlcanzada;
+	public int getUltimaPosicionAlcanzadaIncremento() {
+		synchronized (lockUltimaPosicionAlcanzada){
+			int pos=ultimaPosicionAlcanzada;
+			ultimaPosicionAlcanzada++;
+		return pos;}
 	}
 
-	public void setUltimaPosicionAlcanzada(int ultimaPosicionAlcanzada) {
-		this.ultimaPosicionAlcanzada = ultimaPosicionAlcanzada;
+	public int getUltimaPosicionAlcanzada() {
+		synchronized (lockUltimaPosicionAlcanzada) {
+		return ultimaPosicionAlcanzada;}
 	}
+
+	public void setUltimaPosicionAlcanzada(int nuevaUltimaPosicionAlcanzada) {
+		synchronized (lockUltimaPosicionAlcanzada) {
+			this.ultimaPosicionAlcanzada = nuevaUltimaPosicionAlcanzada;
+		}
+	}
+
+
 
 	
 	
