@@ -12,14 +12,17 @@ Creación, puesta en marcha y coordinación de hilos.
 
 **1.** Revise el programa “primos concurrentes” (en la carpeta parte1), dispuesto en el paquete edu.eci.arsw.primefinder. Este es un programa que calcula los números primos entre dos intervalos, distribuyendo la búsqueda de los mismos entre hilos independientes. Por ahora, tiene un único hilo de ejecución que busca los primos entre 0 y 30.000.000. Ejecútelo, abra el administrador de procesos del sistema operativo, y verifique cuantos núcleos son usados por el mismo.
 
-**Antes de correr**
+**Antes de correr:**
+
 ![image4.png](img%2Fmedia%2Fimage4.png)
 
-**Despues de ejecutar Con el maximo valor de Integer**
+**Despues de ejecutar Con el maximo valor de Integer:**
+
 ![image3.png](img%2Fmedia%2Fimage3.png)
 
 
 **2.** Modifique el programa para que, en lugar de resolver el problema con un solo hilo, lo haga con tres, donde cada uno de éstos hará la tarcera parte del problema original. Verifique nuevamente el funcionamiento, y nuevamente revise el uso de los núcleos del equipo.
+
 ![image5.png](img%2Fmedia%2Fimage5.png)
 
 **3.** Lo que se le ha pedido es: debe modificar la aplicación de manera que cuando hayan transcurrido 5 segundos desde que se inició la ejecución, se detengan todos los hilos y se muestre el número de primos encontrados hasta el momento. Luego, se debe esperar a que el usuario presione ENTER para reanudar la ejecución de los mismo.
@@ -33,7 +36,7 @@ Para esta parte lo que hicimos fue implementar una TimerTask para controlar la p
 
 
 
-#####Parte II 
+#### Parte II 
 
 
 Para este ejercicio se va a trabajar con un simulador de carreras de galgos (carpeta parte2), cuya representación gráfica corresponde a la siguiente figura:
@@ -51,13 +54,13 @@ logre tomar el ‘1’ será el ganador.
 
 Al iniciar la aplicación, hay un primer error evidente: los resultados (total recorrido y número del galgo ganador) son mostrados antes de que finalice la carrera como tal. Sin embargo, es posible que una vez corregido esto, haya más inconsistencias causadas por la presencia de condiciones de carrera.
 
-Taller.
+Taller:
 
 1.  Corrija la aplicación para que el aviso de resultados se muestre
     sólo cuando la ejecución de todos los hilos ‘galgo’ haya finalizado.
     Para esto tenga en cuenta:
     
-    a. La acción de iniciar la carrera y mostrar los resultados se realiza a partir de la línea 38 de MainCanodromo.
+    **a.** La acción de iniciar la carrera y mostrar los resultados se realiza a partir de la línea 38 de MainCanodromo.
 
     Como se puede ver lo que pasa es que al momento de iniciar la carrera se anuncia el ganador, pero como ningun galgo ha llegado a la meta siempre se muestra null.
 
@@ -65,7 +68,7 @@ Taller.
 
     ![resultBeforeChanges.png](./img/media/resultBeforeChanges.png)
 
-    b. Puede utilizarse el método join() de la clase Thread para sincronizar el hilo que inicia la carrera, con la finalización de los hilos de los galgos.
+    **b.** Puede utilizarse el método join() de la clase Thread para sincronizar el hilo que inicia la carrera, con la finalización de los hilos de los galgos.
     
     Lo que hicimos fue agregar un ciclo en el que por cada galgo que es representado por un hilo se le agregue un ```join()``` de manera que el hilo principal que lanza la carrera
     se pausa hasta que el galgo haya completado su ejecución, de esta manera se garantiza que el ganador solo se anuncie cuando la carrera acabe.
@@ -74,7 +77,7 @@ Taller.
 
     ![resultAfterChanges.png](./img/media/resultAfterChanges.png)
 
-   3.  Una vez corregido el problema inicial, corra la aplicación varias
+   2.  Una vez corregido el problema inicial, corra la aplicación varias
        veces, e identifique las inconsistencias en los resultados de las
        mismas viendo el ‘ranking’ mostrado en consola (algunas veces
        podrían salir resultados válidos, pero en otros se pueden presentar
